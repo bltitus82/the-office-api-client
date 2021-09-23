@@ -1,4 +1,5 @@
 import React from 'react';
+import AccountManager from './components/accounts';
 import Navbar from './components/navbar/navigationbar';
 import SideNav from './components/sidebar/SideNav';
 
@@ -9,6 +10,7 @@ const Application: React.FunctionComponent<IApplicationProps> = props => {
         <div className="App">
             <Navbar />
             <SideNav />
+            <AccountManager />
         </div>
     )
 }
