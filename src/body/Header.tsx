@@ -9,6 +9,7 @@ type HeaderState = {
     quote: string;
 };
 
+
 export default class Header extends React.Component<{}, HeaderState> {
     constructor(props: {}) {
         super(props);

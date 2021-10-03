@@ -12,7 +12,8 @@ import {
 type AuthProps = {
     updateToken(token: string): void,
     clickLogout(): void,
-    updateAdmin(admin: string): void
+    updateAdmin(admin: string): void,
+    updateProfileID(profileID: string): void
 }
 
 type AuthState = {
@@ -27,7 +28,9 @@ type AuthState = {
     pwValid: boolean,
     unValid: boolean,
     token: string,
-    begErr: string
+    begErr: string,
+    profileID: number,
+    userID: number
 }
 
 export default class Auth extends React.Component<AuthProps, AuthState> {
@@ -44,7 +47,9 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         pwValid: false,
         unValid: false,
         token: '',
-        begErr: 'We apologize, '
+        begErr: 'We apologize, ',
+        profileID: 0,
+        userID: 0
     }
 
     handleSignup = async () => {
@@ -55,7 +60,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         const userReqBody = {
             user: {
                 email: this.state.email,
-                password: this.state.email
+                password: this.state.password
             }
         }
 
@@ -96,7 +101,8 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                     })
 
                     const profileJson = await profileRes.json();
-
+                    this.setState({ profileID: profileJson.id })
+                    
                     if (profileJson.errors) {
                         let profileErrMsg = profileJson.errors[0].message
                         this.setState({profileErrorText: profileErrMsg.charAt(0).toUpperCase() + profileErrMsg.slice(1) + '.'})
@@ -113,9 +119,30 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         }
     }
 
+    getProfileID = async () => {
+        const profileURL = `http://localhost:3000/profile/user/${this.state.userID}`;
+
+        try {
+            const res = await fetch(profileURL, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${this.state.token}`
+                }
+            })
+
+            const json = await res.json();
+            this.setState ({profileID: json.id})
+        } catch (err) {
+            alert(`${this.state.begErr}`)
+            console.log(err)
+        }
+    } 
+
     handleLogin = async () => {
         const logErr = 'the username or password is incorrect. Please try again.';
         const apiURL = 'http://localhost:3000/user/login';
+        
         const reqBody = {
             user:{
                 email: this.state.email,
@@ -135,12 +162,15 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
             const json = await res.json();
             const token = json.sessionToken;
             this.props.updateToken(token);
+            this.setState ({userID: json.user.id})
+
+            this.getProfileID();
 
             if (json.errors) {
                 let errMsg = json.errors[0].message
                 this.setState({errorText: errMsg.charAt(0).toUpperCase() + errMsg.slice(1) + '.'})
                 throw new Error(json.errors[0].message)
-            }
+            } 
         } catch (err) {
             alert(`${this.state.begErr}${logErr}`)
             console.log(err)
