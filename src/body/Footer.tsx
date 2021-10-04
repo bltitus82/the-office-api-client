@@ -32,7 +32,7 @@ export default class Footer extends React.Component {
                             <Heading>Resources</Heading>
                             <FooterLink href="https://www.peacocktv.com/stream-tv/the-office"> Watch The Office on Peacock! </FooterLink>
                             <FooterLink href="https://www.officeladies.com"> The Office Ladies podcast </FooterLink>
-                            <FooterLink href="https://www.theincomparable.com/sim/"> Somehow I Manage podcast on The Incomperable </FooterLink>
+                            <FooterLink href="https://www.theincomparable.com/sim/"> Somehow I Manage podcast on The Incomparable </FooterLink>
                             <FooterLink href="https://www.iheart.com/podcast/1119-the-office-deep-dive-with-77030510/"> The Office Deep Dive with Brian Baumgartner on iHeart </FooterLink>
                         </Column>
                     </Row>
