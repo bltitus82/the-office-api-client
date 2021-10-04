@@ -3,6 +3,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
+
 type Character = {
     charName: string,
     id: number,
@@ -16,7 +17,7 @@ type CProps = {
     userToken: string,
     admin: string,
     apiErr: string,
-    profileID: string | number
+    profileID: string | number,
 }
 
 type CState = {
@@ -25,7 +26,8 @@ type CState = {
     job: string,
     actorName: string,
     picture: string,
-    charList: []
+    charList: [],
+    Character: []
 }
 
 type allChars = {
@@ -46,7 +48,8 @@ export default class Characters extends React.Component<CProps, CState> {
             actorName: '',
             picture: '',
             charList: [],
-        }
+            Character: [],
+        };
     }
 
     getAllChar = async () => {
@@ -61,6 +64,28 @@ export default class Characters extends React.Component<CProps, CState> {
             })
             const json = await res.json();
             this.setState({charList: json})
+        } catch (err) {
+            alert(`${cErr}${this.props.apiErr}`)
+            console.log(err)
+        }
+    }
+
+    componentDidMount() {
+        this.getAllChar()
+    }
+
+    characterCard = async () => {
+        const cErr = 'The operation was unsuccessful. Please try again. ';
+        const apiURL = `http://localhost:3000/characters/${this.state.id}`
+        try {
+            const res = await fetch (apiURL, {
+                method: 'GET',
+                headers: new Headers({
+                    "Content-Type": "application/json"
+                })
+            })
+            const json = await res.json();
+            this.setState({Character: json})
         } catch (err) {
             alert(`${cErr}${this.props.apiErr}`)
             console.log(err)
@@ -91,3 +116,4 @@ export default class Characters extends React.Component<CProps, CState> {
         )
     }
 }
+
