@@ -48,7 +48,7 @@ export default class Navbar extends React.Component<NavbarProps, {}> {
                 <div>
                     <Switch>
                         <Route exact path="/quotes"><Quotes userToken={this.props.currentToken} admin={this.props.admin} apiErr={this.props.apiErr} profileID={this.props.profileID} /></Route>
-                        <Route exact path="/characters"><Characters /></Route>
+                        <Route exact path="/characters"><Characters userToken={this.props.currentToken} admin={this.props.admin} apiErr={this.props.apiErr} profileID={this.props.profileID} /></Route>
                         <Route exact path="/episodes"><Episodes /></Route>
                         <Route exact path="/likes"><Likes /></Route>
                     </Switch>

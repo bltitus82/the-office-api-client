@@ -62,7 +62,7 @@ export default class Quotes extends React.Component<QProps, QState> {
                 })
             })
             const json = await res.json();
-            this.setState({quote: json})
+            this.setState({quote: json.quote})
             this.setState({id: json.id})
             this.setState({likeCount: json.likes})
             this.setState({charId: json.characterId})
