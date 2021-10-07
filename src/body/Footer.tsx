@@ -8,6 +8,7 @@ import {
     Heading,
     FooterP
 } from '../styling/styles';
+import { BrowserRouter as Router } from 'react-router-dom'
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
@@ -18,6 +19,7 @@ export default class Footer extends React.Component {
             <FooterStyle>
                 <FooterContainer>
                     <Row>
+                        <Router>
                         <Column>
                             <Heading>Designed By:</Heading>
                             <FooterLink href="https://www.linkedin.com/in/bltitus" target="_blank"><LinkedInIcon /> Brad Titus </FooterLink>
@@ -35,6 +37,7 @@ export default class Footer extends React.Component {
                             <FooterLink href="https://www.theincomparable.com/sim/"> Somehow I Manage podcast on The Incomparable </FooterLink>
                             <FooterLink href="https://www.iheart.com/podcast/1119-the-office-deep-dive-with-77030510/"> The Office Deep Dive with Brian Baumgartner on iHeart </FooterLink>
                         </Column>
+                        </Router>
                     </Row>
                 </FooterContainer>
             </FooterStyle>

@@ -8,6 +8,11 @@ import Navbar from './body/Navbar';
 import { BrowserRouter as Router } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Body from './body/Body';
+import { Switch, Route } from 'react-router-dom';
+import Quotes from './components/Quotes';
+import Characters from './components/Characters';
+import Episodes from './components/Episodes';
+import Likes from './components/Likes';
 
 type AppState = {
     sessionToken: string | null,
@@ -16,6 +21,12 @@ type AppState = {
     profileID: number | string
 }
 
+type NavbarProps = {
+    currentToken: string,
+    admin: string,
+    apiErr: string,
+    profileID: number
+}
 class App extends React.Component <{}, AppState>{
     state= {
         sessionToken: '',
@@ -60,17 +71,34 @@ class App extends React.Component <{}, AppState>{
             <div>
             <Navbar currentToken={this.state.sessionToken} admin={this.state.admin} profileID={this.state.profileID} apiErr={this.state.apiErr} />
             <Header />
-            <Router>
+            
                 <Body />
-            </Router>
+            
             <Footer />
-            </div> : <Auth updateToken={this.updateToken} clickLogout={this.clearToken} updateAdmin={this.updateAdmin} updateProfileID={this.updateProfileID} />
+            </div> : <Auth updateToken={this.updateToken} clickLogout={this.clearToken} updateAdmin={this.updateAdmin} />
         )
     }
     render(){
         return(
             <div>
+            <Router>
+            {/* <Navbar currentToken={this.state.sessionToken} admin={this.state.admin} profileID={this.state.profileID} apiErr={this.state.apiErr} />
+            <Header />
+            
+                <Body />
+            
+            <Footer /> */}
                 {this.loggedInView()}
+                <div>
+                    <Switch>
+                        <Route exact path="/quotes"><Quotes userToken={this.state.sessionToken} admin={this.state.admin} apiErr={this.state.apiErr} profileID={this.state.profileID} /></Route>
+                        <Route exact path="/characters"><Characters userToken={this.state.sessionToken} admin={this.state.admin} apiErr={this.state.apiErr} profileID={this.state.profileID} /></Route>
+                        <Route exact path="/episodes"><Episodes /></Route>
+                        <Route exact path="/likes"><Likes /></Route>
+                        <Route exact path="/"><Auth updateToken={this.updateToken} clickLogout={this.clearToken} updateAdmin={this.updateAdmin} /></Route>
+                    </Switch>
+                </div>
+            </Router>
             </div>
         );
     }

@@ -22,7 +22,8 @@ export default class Header extends React.Component<{}, HeaderState> {
     render(){
         return(
             <HeaderStyle>
-                <Header />
+                {this.state.title}
+                {this.state.quote}
             </HeaderStyle>
         )
     }

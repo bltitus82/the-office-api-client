@@ -10,6 +10,7 @@ import {
     Route,
     Link,
     Switch,
+    BrowserRouter as Router
 } from 'react-router-dom';
 import Quotes from '../components/Quotes';
 import Characters from '../components/Characters';
@@ -29,6 +30,7 @@ export default class Navbar extends React.Component<NavbarProps, {}> {
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
+            <Router>
             <Toolbar>
             <IconButton
                 size="large"
@@ -46,18 +48,21 @@ export default class Navbar extends React.Component<NavbarProps, {}> {
                     <Link to="/likes" ><h4 style={{justifySelf: 'center'}}><BasicButton> Likes </BasicButton></h4></Link>
                 </div>
                 <div>
+                    <Router>
                     <Switch>
                         <Route exact path="/quotes"><Quotes userToken={this.props.currentToken} admin={this.props.admin} apiErr={this.props.apiErr} profileID={this.props.profileID} /></Route>
                         <Route exact path="/characters"><Characters userToken={this.props.currentToken} admin={this.props.admin} apiErr={this.props.apiErr} profileID={this.props.profileID} /></Route>
                         <Route exact path="/episodes"><Episodes /></Route>
                         <Route exact path="/likes"><Likes /></Route>
                     </Switch>
+                    </Router>
                 </div>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 News
             </Typography>
             <Button color="inherit">Login</Button>
             </Toolbar>
+            </Router>
         </AppBar>
         </Box>
     );
