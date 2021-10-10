@@ -13,12 +13,18 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Input from '@mui/material/Input';
+import {
+    Modal,
+    ModalHeader,
+    ModalBody,
+} from 'reactstrap';
+import { ETIME } from 'constants';
 
 type AuthProps = {
     updateToken(token: string): void,
-    clickLogout(): void,
-    updateAdmin(admin: string): void
-    message: string,
+    updateAdmin(admin: string): void,
+    updateUserID(userID: number | string): void,
+    logoff: () => void
 }
 
 type AuthState = {
@@ -34,8 +40,7 @@ type AuthState = {
     unValid: boolean,
     token: string,
     begErr: string,
-    profileID: number,
-    userID: number
+    userID: string
 }
 
 export default class Auth extends React.Component<AuthProps, AuthState> {
@@ -53,7 +58,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
         unValid: false,
         token: '',
         begErr: 'We apologize, ',
-        userID: 0
+        userID: '',
     }
 
     handleRegister = async () => {
@@ -80,9 +85,13 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
             })
             const result = await userRes.json();
             const token = result.sessionToken;
+            const tempUser = result.User
             this.props.updateToken(token);
-            console.log(result)
-
+            this.props.updateUserID(tempUser);
+            console.log(result);
+            console.log(this.state.userID);
+            this.props.logoff();
+            
             if (result.errors) {
                 let errMsg = result.errors[0].message 
                 this.setState({errorText: errMsg.charAt(0).toUpperCase() + errMsg.slice(1) + '.'})
@@ -108,6 +117,8 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
             }
         }
 
+        console.log(this.state.email, this.state.password)
+
         try {
             const res = await fetch(apiURL, {
                 method: "POST",
@@ -121,6 +132,8 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
             const token = json.sessionToken;
             this.props.updateToken(token);
             this.setState ({userID: json.user.id})
+            console.log(json)
+            this.props.logoff()
 
             if (json.errors) {
                 let errMsg = json.errors[0].message
@@ -165,7 +178,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
 
     render() {
         return(
-            <div>
+            <Modal isOpen={true}>
                 {this.state.signup ?
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
@@ -176,13 +189,15 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                             flexDirection: 'column',
                             alignItems: 'center',
                         }}
-                        >
+                        > <ModalHeader>
                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                                 <LockOutlinedIcon />
                             </Avatar>
                             <Typography component="h1" variant="h5">
-                                Sign in
+                                Create an Account
                             </Typography>
+                            </ModalHeader>
+                            <ModalBody>
                             <Box component="form" onSubmit={(e: { preventDefault: () => void; }) => {
                                 e.preventDefault()
                                 this.handleRegister()
@@ -229,14 +244,20 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                             >
                                 Register
                             </Button>
-                            <Grid container>
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        {"Already have an account? Sign in!"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                onClick={() => this.setState({signup: !this.state.signup})}>
+                                {this.state.signup ? 'Need to Login?' : 'Need to Register?'}</Button>
                             </Box>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                onClick={() => this.props.logoff()}>
+                                CANCEL</Button>
+                            </ModalBody>
                         </Box>
                 </Container>
                 : 
@@ -250,12 +271,15 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                             alignItems: 'center',
                         }}
                         >
+                            <ModalHeader>
                             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                                 <LockOutlinedIcon />
                             </Avatar>
                             <Typography component="h1" variant="h5">
                                 Sign In
                             </Typography>
+                            </ModalHeader>
+                            <ModalBody>
                             <Box component="form" onSubmit={(e: { preventDefault: () => void; }) => {
                                 e.preventDefault()
                                 this.handleLogin()
@@ -271,8 +295,8 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                                 name="email"
                                 autoComplete="email"
                                 autoFocus
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => { this.setState({email: e.target.value}) }}
                             />
-                            <Input type='email' id='email' name='email' onChange={(e: React.ChangeEvent<HTMLInputElement>) => { this.setState({email: e.target.value}) }} title='Please enter your email address' required />
                             </div>
                             <div>
                             <TextField
@@ -283,8 +307,8 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                                 label="Password"
                                 type="password"
                                 id="password"
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => { this.setState({password: e.target.value}) }}
                             />
-                            <Input type='password' id='password' name='password' onChange={(e: React.ChangeEvent<HTMLInputElement>) => { this.setState({password: e.target.value}) }} title='Please enter your password' required />
                             </div>
                             <Button
                                 type="submit"
@@ -294,18 +318,24 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                             >
                                 Sign In
                             </Button>
-                            <Grid container>
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        {"Don't have an account? Sign up!"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                onClick={() => this.setState({signup: !this.state.signup})}>
+                                {this.state.signup ? 'Need to Login?' : 'Need to Register?'}</Button>
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                                onClick={() => this.props.logoff()}>
+                                CANCEL</Button>
                             </Box>
+                            </ModalBody>
                         </Box>
                 </Container>
                 }
-            </div>
+            </Modal>
         )
     }
 }

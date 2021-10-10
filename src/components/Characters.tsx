@@ -14,10 +14,10 @@ type Character = {
 }
 
 type CProps = {
-    userToken: string,
-    admin: string,
+    token: string | null
+    admin: string | null
     apiErr: string,
-    profileID: string | number,
+    userID: string | null
 }
 
 type CState = {

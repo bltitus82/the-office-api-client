@@ -16,16 +16,63 @@ import Quotes from '../components/Quotes';
 import Characters from '../components/Characters';
 import Episodes from '../components/Episodes';
 import Likes from '../components/Likes';
+import Auth from '../auth/Auth';
+import Admin from '../auth/Admin';
 import { BasicButton } from '../styling/styles';
 
 type NavbarProps = {
-    currentToken: string,
-    admin: string,
-    apiErr: string,
-    profileID: number
+    token: string | null
+    admin: string | null
+    apiErr: string
 }
 
-export default class Navbar extends React.Component<NavbarProps, {}> {
+type NavbarState = {
+    loggedIn: boolean
+    userID: string | null
+    token: string | null
+    admin: string | null
+}
+
+export default class Navbar extends React.Component<NavbarProps, NavbarState> {
+    constructor(props: NavbarProps) {
+        super(props)
+        this.state = {
+            loggedIn: false,
+            userID: null,
+            token: '',
+            admin: '',
+        }
+    }
+    
+    login = (): void => {
+        this.setState({ loggedIn: true })
+    }
+    
+    logoff = (): void => {
+        this.setState({ loggedIn: false })
+    }
+
+    updateToken = (newToken: string) => {
+        localStorage.setItem('token', newToken);
+        this.setState({token: newToken})
+    }
+
+    updateAdmin = (newAdmin: string) => {
+        localStorage.setItem('admin', newAdmin);
+        this.setState({admin: newAdmin})
+    }
+
+    clearToken = () => {
+        localStorage.clear();
+        this.setState({token: ('')})
+        window.location.href = '/'
+    }
+
+    updateUserID = (newUserID: string) => {
+        localStorage.setItem('userId', newUserID);
+        this.setState({userID: newUserID})
+    }
+
     render(){
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -50,17 +97,24 @@ export default class Navbar extends React.Component<NavbarProps, {}> {
                 <div>
                     <Router>
                     <Switch>
-                        <Route exact path="/quotes"><Quotes userToken={this.props.currentToken} admin={this.props.admin} apiErr={this.props.apiErr} profileID={this.props.profileID} /></Route>
-                        <Route exact path="/characters"><Characters userToken={this.props.currentToken} admin={this.props.admin} apiErr={this.props.apiErr} profileID={this.props.profileID} /></Route>
+                        <Route exact path="/quotes"><Quotes token={this.state.token} admin={this.state.admin} apiErr={this.props.apiErr} userID={this.state.userID} /></Route>
+                        <Route exact path="/characters"><Characters token={this.state.token} admin={this.state.admin} apiErr={this.props.apiErr} userID={this.state.userID} /></Route>
                         <Route exact path="/episodes"><Episodes /></Route>
                         <Route exact path="/likes"><Likes /></Route>
                     </Switch>
                     </Router>
                 </div>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                News
+                The Office Hub
             </Typography>
-            <Button color="inherit">Login</Button>
+            <Button color="inherit" onClick={e => {
+                e.preventDefault()
+                this.login()
+            }}
+            >Login</Button>
+            {this.state.loggedIn ? 
+            <Auth logoff={this.logoff} updateToken={this.updateToken} updateAdmin={this.updateAdmin} updateUserID={this.updateUserID} />  :
+            <></> }
             </Toolbar>
             </Router>
         </AppBar>

@@ -19,10 +19,10 @@ type Quote = {
 }
 
 type QProps = {
-    userToken: string,
-    admin: string,
+    token: string | null
+    admin: string | null
     apiErr: string,
-    profileID: string | number
+    userID: string | null
 }
 
 type QState = {
@@ -62,10 +62,12 @@ export default class Quotes extends React.Component<QProps, QState> {
                 })
             })
             const json = await res.json();
+            console.log(json)
             this.setState({quote: json.quote})
             this.setState({id: json.id})
             this.setState({likeCount: json.likes})
             this.setState({charId: json.characterId})
+            console.log(this.state.charId)
             this.getChar();
         } catch (err) {
             alert(`${qErr}${this.props.apiErr}`)
@@ -75,7 +77,7 @@ export default class Quotes extends React.Component<QProps, QState> {
 
     getChar = async () => {
         const cErr = "The operation was unsuccessful. Please try again. "
-        const apiURL = `http://localhost:3000/${this.state.charId}`
+        const apiURL = `http://localhost:3000/characters/${this.state.charId}`
         try {
             const res = await fetch (apiURL, {
                 method: "GET",
@@ -98,13 +100,13 @@ export default class Quotes extends React.Component<QProps, QState> {
 
     likeQuote = async () => {
         const lErr = "The operation was unsuccessful. Please try again. "
-        const apiURL = `http://localhost:3000/likes/profile/${this.props.profileID}/quote/${this.state.id}`
+        const apiURL = `http://localhost:3000/likes/user/${this.props.userID}/quote/${this.state.id}`
         try {
             const res = await fetch (apiURL, {
-                method: "PUT",
+                method: "POST",
                 headers: new Headers({
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${this.props.userToken}`
+                    "Authorization": `Bearer ${this.props.token}`
                 })
             })
             const json = await res.json();
@@ -120,14 +122,14 @@ export default class Quotes extends React.Component<QProps, QState> {
 
     unLikeQuote = async () => {
         const ulErr = "The operation was unsuccessful. Please try again. "
-        const apiURL = `http://localhost:3000/likes/profile/${this.props.profileID}/quote/${this.state.id}`
+        const apiURL = `http://localhost:3000/likes/user/${this.props.userID}/quote/${this.state.id}`
         
         try{
             const res = await fetch (apiURL, {
                 method: 'DELETE',
                 headers: new Headers({
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${this.props.userToken}`
+                    "Authorization": `Bearer ${this.props.token}`
                 })
             })
             const json = await res.json();
@@ -156,7 +158,7 @@ export default class Quotes extends React.Component<QProps, QState> {
                 body: JSON.stringify(quoteBody),
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${this.props.userToken}`
+                    "Authorization": `Bearer ${this.props.token}`
                 },
             })
 
@@ -172,7 +174,7 @@ export default class Quotes extends React.Component<QProps, QState> {
     render() {
         return(
             <div>
-                if ({this.props.userToken}) {
+                {this.props.token ? 
                     <Card sx={{ maxWidth: 345 }}>
                         <CardMedia
                             component="img"
@@ -189,15 +191,35 @@ export default class Quotes extends React.Component<QProps, QState> {
                             </Typography>
                         </CardContent>
                         <CardActions>
-                            if ({this.state.liked}) {
+                            {this.state.liked ? 
                                 <button name='unlike' onClick={this.unLikeQuote}> <FavoriteBorderIcon onClick={() => this.unLikeQuote} /> </button>                          
-                            } else {
+                            : 
                                 <button name='like' onClick={this.likeQuote}> <FavoriteIcon onClick={() => this.likeQuote} /> </button>
                             }
                             {this.state.likeCount}
-                        </CardActions>
+                        </CardActions> 
                     </Card>
-                }
+                    :
+                    <Card sx={{ maxWidth: 345 }}>
+                        <CardMedia
+                            component="img"
+                            height="500"
+                            image={this.state.charImg}
+                            alt={this.state.charName}
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                            {this.state.quote}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {this.state.charName}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            To like or submit a quote, please log in.
+                        </CardActions>
+                        </Card>
+                    }                    
             </div>
         )
     }
