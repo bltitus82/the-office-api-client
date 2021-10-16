@@ -77,7 +77,7 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-            <Router>
+            {/* <Router> */}
             <Toolbar>
             <IconButton
                 size="large"
@@ -89,20 +89,13 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                 <MenuIcon />
             </IconButton>
             <div>
-                    <Link to="/quotes" ><h4 style={{justifySelf: 'center'}}><BasicButton> Quotes </BasicButton></h4></Link>
+                    <Link to="/" ><h4 style={{justifySelf: 'center'}}><BasicButton> Quotes </BasicButton></h4></Link>
                     <Link to="/characters" ><h4 style={{justifySelf: 'center'}}><BasicButton> Characters </BasicButton></h4></Link>
                     <Link to="/episodes" ><h4 style={{justifySelf: 'center'}}><BasicButton> Episodes </BasicButton></h4></Link>
                     <Link to="/likes" ><h4 style={{justifySelf: 'center'}}><BasicButton> Likes </BasicButton></h4></Link>
                 </div>
                 <div>
-                    <Router>
-                    <Switch>
-                        <Route exact path="/quotes"><Quotes token={this.state.token} admin={this.state.admin} apiErr={this.props.apiErr} userID={this.state.userID} /></Route>
-                        <Route exact path="/characters"><Characters token={this.state.token} admin={this.state.admin} apiErr={this.props.apiErr} userID={this.state.userID} /></Route>
-                        <Route exact path="/episodes"><Episodes /></Route>
-                        <Route exact path="/likes"><Likes /></Route>
-                    </Switch>
-                    </Router>
+                    
                 </div>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                 The Office Hub
@@ -116,7 +109,7 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
             <Auth logoff={this.logoff} updateToken={this.updateToken} updateAdmin={this.updateAdmin} updateUserID={this.updateUserID} />  :
             <></> }
             </Toolbar>
-            </Router>
+            {/* </Router> */}
         </AppBar>
         </Box>
     );

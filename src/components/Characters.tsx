@@ -2,6 +2,12 @@ import React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 
 type Character = {
@@ -54,7 +60,7 @@ export default class Characters extends React.Component<CProps, CState> {
 
     getAllChar = async () => {
         const cErr = 'The operation was unsuccessful. Please try again. ';
-        const apiURL = `https://localhost:3000/characters/all`;
+        const apiURL = `http://localhost:3000/characters/all`;
         try {
             const res = await fetch (apiURL, {
                 method: 'GET',

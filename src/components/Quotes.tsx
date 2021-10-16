@@ -6,6 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 type Quote = {
     quoteBody: string,
@@ -112,8 +113,9 @@ export default class Quotes extends React.Component<QProps, QState> {
             const json = await res.json();
             console.log(json)
             this.setState({newLikeCount: this.state.likeCount + 1})
+            console.log(this.state.newLikeCount)
             this.setState({liked: true})
-            this.updateLikes()
+            // this.updateLikes()
         } catch (err) {
             alert(`${lErr}${this.props.apiErr}`)
             console.log(err)
@@ -135,40 +137,43 @@ export default class Quotes extends React.Component<QProps, QState> {
             const json = await res.json();
             console.log(json)
             this.setState({newLikeCount: this.state.likeCount - 1})
+            console.log(this.state.newLikeCount)
             this.setState({liked: false})
-            this.updateLikes()
+            // this.updateLikes()
         } catch (err) {
             alert(`${ulErr}${this.props.apiErr}`)
             console.log(err)
         }
     }
 
-    updateLikes = async () => {
-        const uErr = 'The operation was unsuccessful. Please try again. '
-        const apiURL = `http://localhost:3000/quotes/${this.state.id}`
-        const quoteBody = {
-            quotes: {
-                likes: this.state.newLikeCount
-            }
-        }
-        
-        try {
-            const res = await fetch (apiURL, {
-                method: 'PUT',
-                body: JSON.stringify(quoteBody),
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${this.props.token}`
-                },
-            })
+    // updateLikes = async () => {
+    //     const uErr = 'The operation was unsuccessful. Please try again. '
+    //     const apiURL = `http://localhost:3000/quotes/${this.state.id}`
+    //     const quoteBody = {
+    //         quotes: {
+    //             likes: this.state.newLikeCount
+    //         }
+    //     }
+    //     console.log(this.state.id)
 
-            const json = await res.json();
-            this.setState({ likeCount: json.likes })
-        } catch (err) {
-            alert(`${uErr}${this.props.apiErr}`)
-            console.log(err)
-        }
-    } 
+    //     try {
+    //         const res = await fetch(apiURL, {
+    //             method: 'PUT',
+    //             body: JSON.stringify(quoteBody),
+    //             headers: new Headers({
+    //                 "Content-Type": "application/json",
+    //                 "Authorization": `Bearer ${this.props.token}`
+    //             })
+    //         })
+
+    //         const json = await res.json();
+    //         this.setState({ likeCount: json.likes })
+    //         console.log(this.state.likeCount)
+    //     } catch (err) {
+    //         alert(`${uErr}${this.props.apiErr}`)
+    //         console.log(err)
+    //     }
+    // } 
 
 
     render() {
@@ -196,8 +201,9 @@ export default class Quotes extends React.Component<QProps, QState> {
                             : 
                                 <button name='like' onClick={this.likeQuote}> <FavoriteIcon onClick={() => this.likeQuote} /> </button>
                             }
-                            {this.state.likeCount}
+                            {/* {this.state.likeCount} Update this functionality later */}
                         </CardActions> 
+                        <Button variant="outlined" onClick={this.getQuote}>Next Quote</Button>
                     </Card>
                     :
                     <Card sx={{ maxWidth: 345 }}>
@@ -218,6 +224,7 @@ export default class Quotes extends React.Component<QProps, QState> {
                         <CardActions>
                             To like or submit a quote, please log in.
                         </CardActions>
+                        <Button variant="outlined" onClick={this.getQuote}>Next Quote</Button>
                         </Card>
                     }                    
             </div>
