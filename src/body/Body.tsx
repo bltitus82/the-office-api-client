@@ -38,8 +38,8 @@ export default class Body extends React.Component<bProps, bState> {
                     <Switch>
                         <Route exact path="/"><Quotes token={this.props.token} admin={this.props.admin} apiErr={this.props.apiErr} userID={this.props.userID} /></Route>
                         <Route exact path="/characters"><Characters token={this.props.token} admin={this.props.admin} apiErr={this.props.apiErr} userID={this.props.userID} /></Route>
-                        <Route exact path="/episodes"><Episodes /></Route>
-                        <Route exact path="/likes"><Likes /></Route>
+                        <Route exact path="/episodes"><Episodes token={this.props.token} admin={this.props.admin} apiErr={this.props.apiErr} userID={this.props.userID} /></Route>
+                        <Route exact path="/likes"><Likes token={this.props.token} admin={this.props.admin} apiErr={this.props.apiErr} userID={this.props.userID} /></Route>
                     </Switch>
                 <Footer />
             </div>

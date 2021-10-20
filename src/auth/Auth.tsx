@@ -98,8 +98,6 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
                 throw new Error(result.errors[0].message)
             } 
 
-        
-
         } catch (err) {
                 alert(`${this.state.begErr}${signErr}`)
                 console.log(err)
