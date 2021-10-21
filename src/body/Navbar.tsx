@@ -6,16 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {
-    Route,
-    Link,
-    Switch,
-    BrowserRouter as Router
-} from 'react-router-dom';
-import Quotes from '../components/Quotes';
-import Characters from '../components/Characters';
-import Episodes from '../components/Episodes';
-import Likes from '../components/Likes';
+import { Link } from 'react-router-dom';
 import Auth from '../auth/Auth';
 import Admin from '../auth/Admin';
 import { BasicButton } from '../styling/styles';
@@ -77,7 +68,6 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-            {/* <Router> */}
             <Toolbar>
             <IconButton
                 size="large"
@@ -109,7 +99,6 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
             <Auth logoff={this.logoff} updateToken={this.updateToken} updateAdmin={this.updateAdmin} updateUserID={this.updateUserID} />  :
             <></> }
             </Toolbar>
-            {/* </Router> */}
         </AppBar>
         </Box>
     );

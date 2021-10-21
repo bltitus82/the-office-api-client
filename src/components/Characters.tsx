@@ -16,15 +16,6 @@ import {
 import Grid from '@mui/material/Grid';
 import Item from '@mui/material/ListItem';
 
-type Character = {
-    charName: string,
-    id: number,
-    job: string,
-    actorName: string,
-    picture: string,
-    charList: []
-}
-
 type CProps = {
     token: string | null
     admin: string | null
@@ -127,6 +118,7 @@ export default class Characters extends React.Component<CProps, CState> {
                                 loading="lazy"
                                 onClick={e => {
                                     e.preventDefault()
+                                    this.setState({ id: char.id })
                                     this.charModal()
                                 }}
                             />
