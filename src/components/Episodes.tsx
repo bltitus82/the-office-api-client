@@ -1,13 +1,4 @@
 import * as React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import EpisodesModal from './EpisodesModal';
-import {
-    Modal,
-    ModalHeader,
-    ModalBody,
-} from 'reactstrap';
-import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,6 +8,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 type eProps = {
     token: string | null
@@ -33,7 +28,6 @@ type State = {
     epNumber: number,
     synopsis: string,
     episodeData: Array<episodeList>,
-    modalWindow: boolean
 }
 
 type episodeList = {
@@ -75,15 +69,14 @@ export default class Episodes extends React.Component<eProps, State> {
             epNumber: 0,
             synopsis: '',
             airDate: null,
-            episodeData: [],
-            modalWindow: false
+            episodeData: []
         };
     }
 
-    getEpisodes = async (season: number) => {
+    getEpisodes = async () => {
         console.log('start')
         const Err = 'Operation unsuccessful.';
-        const apiURL = `http://localhost:3000/episodes/season/${season}`
+        const apiURL = `http://localhost:3000/episodes/`
         try {
             const res = await fetch(apiURL, {
                 method: "GET",
@@ -93,6 +86,7 @@ export default class Episodes extends React.Component<eProps, State> {
             })
             const json = await res.json();
             this.setState({ episodeData: json })
+            console.log(json)
             console.log(this.state.episodeData)
         } catch (err) {
             alert(`${Err}`)
@@ -100,95 +94,58 @@ export default class Episodes extends React.Component<eProps, State> {
         }
     }
 
-    modalOn = (): void => {
-        this.setState({ modalWindow: true })
-    }
-
-    modalOff = (): void => {
-        this.setState({ modalWindow: false })
-    }
-
-    episodesMapper = () => {
-        console.log("episodesMapper is called")
-        return() => {
-            return(
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>Title</StyledTableCell>
-                                <StyledTableCell align="right">Air Date</StyledTableCell>
-                                <StyledTableCell align="right">Season</StyledTableCell>
-                                <StyledTableCell align="right">Episode</StyledTableCell>
-                                <StyledTableCell align="right">Synopsis</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.state.episodeData.map((eps) => (
-                                <StyledTableRow key={eps.id}>
-                                    <StyledTableCell component="th" scope="row">
-                                        {eps.title}
-                                    </StyledTableCell>
-                                    <StyledTableCell align="right">{eps.airDate}</StyledTableCell>
-                                    <StyledTableCell align="right">{eps.season}</StyledTableCell>
-                                <StyledTableCell align="right">{eps.epNumber}</StyledTableCell>
-                                <StyledTableCell align="right">{eps.synopsis}</StyledTableCell>
-                                </StyledTableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            )
-        }
+    componentDidMount() {
+        this.getEpisodes()
     }
 
     seasonMapper = (): JSX.Element[] => {
         return this.itemData.map((item) => {
             return(
-                <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={250} gap={10} >
-                    <ImageListItem key={item.img}>
-                        <img
-                            src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                            srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                            alt={item.title}
-                            onClick={e => {
-                                e.preventDefault()
-                                this.setState({season: item.season})
-                                this.getEpisodes(item.season)
-                                this.modalOn()
-                            }}
-                            loading="lazy"
-                        />
-                        {console.log("Modal is called")}
-                        <Modal 
-                            open={this.state.modalWindow}
-                            onClose={this.modalOff}
+                <div>
+                    <Accordion> 
+                        <AccordionSummary 
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                            key={item.season}
                         >
-                            <Box
-                                sx={{
-                                    marginTop: 8,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                }}
-                            > 
-                            <ModalHeader open={this.state.modalWindow}
-                            onClose={this.modalOff}>
-                                <Typography component="h1" variant="h5">
-                                    Episodes
-                                </Typography>
-                            </ModalHeader>
-                            <ModalBody>
-                                {this.episodesMapper()}
-                            </ModalBody>
-                            </Box>
-                            </Modal>
-                    </ImageListItem>
-                </ImageList>
+                            <Typography>{item.title}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>                        
+                            <Typography>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell>Title</StyledTableCell>
+                                            <StyledTableCell align="right">Air Date</StyledTableCell>
+                                            <StyledTableCell align="right">Season</StyledTableCell>
+                                            <StyledTableCell align="right">Episode</StyledTableCell>
+                                            <StyledTableCell align="right">Synopsis</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                    {this.state.episodeData.filter(episode => episode.season === item.season ).map((eps) => (
+                                            <StyledTableRow key={eps.id}>
+                                                <StyledTableCell component="th" scope="row">
+                                                    {eps.title}
+                                                </StyledTableCell>
+                                                <StyledTableCell align="right">{eps.airDate}</StyledTableCell>
+                                                <StyledTableCell align="right">{eps.season}</StyledTableCell>
+                                            <StyledTableCell align="right">{eps.epNumber}</StyledTableCell>
+                                            <StyledTableCell align="right">{eps.synopsis}</StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                </div>
             )
         })
     }
-
 
     render() {
         return(
