@@ -2,19 +2,6 @@ import React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import {
-    Modal,
-    ModalHeader,
-    ModalBody,
-} from 'reactstrap';
-import Grid from '@mui/material/Grid';
-import Item from '@mui/material/ListItem';
 
 type CProps = {
     token: string | null
@@ -97,18 +84,10 @@ export default class Characters extends React.Component<CProps, CState> {
         }
     }
 
-    charModal() {
-        console.log('working')
-        // <Modal isOpen={true}>
-        //     {this.characterCard}
-
-        // </Modal>
-    }
-
     render() {
         return(    
             <div>
-                <ImageList sx={{ width: 500, height: 450 }} cols={4} rowHeight={164}>
+                <ImageList sx={{ width: 500, height: 450 }}>
                     {this.state.charList.map((char: allChars) => (
                         <ImageListItem key={char.picture} >
                             <img 
@@ -116,18 +95,12 @@ export default class Characters extends React.Component<CProps, CState> {
                                 srcSet={`${char.picture}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                 alt={char.charName}
                                 loading="lazy"
-                                onClick={e => {
-                                    e.preventDefault()
-                                    this.setState({ id: char.id })
-                                    this.charModal()
-                                }}
                             />
-                        {/* <ImageListItemBar
-                            onClick={this.charModal}
-                            title={char.charName}
-                            subtitle={<span>Role: {char.job}</span>}
-                            position="below"
-                        /> */}
+                            <ImageListItemBar
+                                title={char.charName}
+                                subtitle={<span>{char.job}</span>}
+                                position="below"
+                            />
                         </ImageListItem>
                     ))}
                 </ImageList>
