@@ -2,6 +2,7 @@ import React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import APIURL from '../helpers/environment';
 
 type CProps = {
     token: string | null
@@ -44,7 +45,7 @@ export default class Characters extends React.Component<CProps, CState> {
 
     getAllChar = async () => {
         const cErr = 'The operation was unsuccessful. Please try again. ';
-        const apiURL = `http://localhost:3000/characters/all`;
+        const apiURL = `${APIURL}/characters/all`;
         try {
             const res = await fetch (apiURL, {
                 method: 'GET',
@@ -67,7 +68,7 @@ export default class Characters extends React.Component<CProps, CState> {
     characterCard = async () => {
         console.log('start')
         const cErr = 'The operation was unsuccessful. Please try again. ';
-        const apiURL = `http://localhost:3000/characters/${this.state.id}`
+        const apiURL = `${APIURL}/characters/${this.state.id}`
         try {
             const res = await fetch (apiURL, {
                 method: 'GET',

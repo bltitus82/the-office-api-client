@@ -5,6 +5,7 @@ import {
     MyH1
 } from '../styling/styles';
 import { Table } from 'reactstrap';
+import APIURL from '../helpers/environment';
 
 type UserAdminProps = {
     creatorToken: string,
@@ -33,7 +34,7 @@ export default class UserAdmin extends React.Component<UserAdminProps, UserAdmin
 
     viewAllProfiles = async () => {
         const queryAllProfilesErr = 'The database cannot be queried at this time';
-        const apiURL = 'http://localhost:3000/profile/all';
+        const apiURL = `${APIURL}/profile/all`;
         try {
             const res = await fetch (apiURL, {
                 method: 'GET',
@@ -54,7 +55,7 @@ export default class UserAdmin extends React.Component<UserAdminProps, UserAdmin
         const confirm = prompt(`Are you sure you want to delete the user ${profile.userName}`, "Yes");
         if (confirm) {
             const deleteProfileErr = 'This user cannot be deleted at this time';
-            const apiURL = `http://localhost:3000/profile/${profile.id}`;
+            const apiURL = `${APIURL}/profile/${profile.id}`;
             try {
                 const res = await fetch (apiURL, {
                     method: 'DELETE',

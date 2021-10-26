@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow, { tableRowClasses } from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import APIURL from '../helpers/environment';
 
 type Props = {
     token: string | null
@@ -39,7 +40,7 @@ export default class Likes extends React.Component<Props, State> {
 
     getLikes = async () => {
         const Err = 'The operation was unsuccessful. Please try again. ';
-        const apiURL = `http://localhost:3000/likes/user/${this.props.userID}`;
+        const apiURL = `${APIURL}/likes/user/${this.props.userID}`;
         try {
             const res = await fetch (apiURL, {
                 method: 'GET',

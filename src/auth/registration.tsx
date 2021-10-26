@@ -6,6 +6,7 @@ import {
   Form,
   Button
 } from "react-bootstrap";
+import APIURL from '../helpers/environment';
 
 type UserRegisterProps = {
   updateToken: (newToken: string, role: string) => void
@@ -32,7 +33,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
   handleFetch = (): void => {
     const { email, password, userName } = this.state
     if (email && password && userName) {
-      fetch('http://localhost:3000/user/register', {
+      fetch(`${APIURL}/user/register`, {
         method: 'POST',
         body: JSON.stringify({
           user: {
@@ -44,7 +45,7 @@ class UserRegister extends Component<UserRegisterProps, UserRegisterState> {
           'Content-Type': 'application/json',
         })
       })
-      fetch('https://localhost:3000/profile/create', {
+      fetch(`${APIURL}/profile/create`, {
           method: 'POST',
           body: JSON.stringify({
             profile: {

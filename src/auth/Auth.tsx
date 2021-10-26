@@ -12,6 +12,7 @@ import {
     ModalHeader,
     ModalBody,
 } from 'reactstrap';
+import APIURL from '../helpers/environment';
 
 type AuthProps = {
     updateToken(token: string): void,
@@ -56,7 +57,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
 
     handleRegister = async () => {
         const signErr = 'there is already an account associated with this email address. Please login.'
-        const userApiURL = 'http://localhost:3000/user/register';
+        const userApiURL = `${APIURL}/user/register`;
         const userReqBody = {
             user: {
                 email: this.state.email,
@@ -99,7 +100,7 @@ export default class Auth extends React.Component<AuthProps, AuthState> {
 
     handleLogin = async () => {
         const logErr = 'the username or password is incorrect. Please try again.';
-        const apiURL = 'http://localhost:3000/user/login';
+        const apiURL = `${APIURL}/user/login`;
         
         const reqBody = {
             user:{

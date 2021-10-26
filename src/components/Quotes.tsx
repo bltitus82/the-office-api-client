@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import APIURL from '../helpers/environment';
 
 type Quote = {
     quoteBody: string,
@@ -54,7 +55,7 @@ export default class Quotes extends React.Component<QProps, QState> {
 
     getQuote = async () => {
         const qErr = "The operation was unsuccessful. Please try again. ";
-        const apiURL = 'http://localhost:3000/quotes/';
+        const apiURL = `${APIURL}/quotes/`;
         try {
             const res = await fetch (apiURL, {
                 method: "GET",
@@ -78,7 +79,7 @@ export default class Quotes extends React.Component<QProps, QState> {
 
     getChar = async () => {
         const cErr = "The operation was unsuccessful. Please try again. "
-        const apiURL = `http://localhost:3000/characters/${this.state.charId}`
+        const apiURL = `${APIURL}/characters/${this.state.charId}`
         try {
             const res = await fetch (apiURL, {
                 method: "GET",
@@ -101,7 +102,7 @@ export default class Quotes extends React.Component<QProps, QState> {
 
     likeQuote = async () => {
         const lErr = "The operation was unsuccessful. Please try again. "
-        const apiURL = `http://localhost:3000/likes/user/${this.props.userID}/quote/${this.state.id}`
+        const apiURL = `${APIURL}/likes/user/${this.props.userID}/quote/${this.state.id}`
         try {
             const res = await fetch (apiURL, {
                 method: "POST",
@@ -124,7 +125,7 @@ export default class Quotes extends React.Component<QProps, QState> {
 
     unLikeQuote = async () => {
         const ulErr = "The operation was unsuccessful. Please try again. "
-        const apiURL = `http://localhost:3000/likes/user/${this.props.userID}/quote/${this.state.id}`
+        const apiURL = `${APIURL}/likes/user/${this.props.userID}/quote/${this.state.id}`
         
         try{
             const res = await fetch (apiURL, {

@@ -12,6 +12,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import APIURL from '../helpers/environment';
 
 type eProps = {
     token: string | null
@@ -76,7 +77,7 @@ export default class Episodes extends React.Component<eProps, State> {
     getEpisodes = async () => {
         console.log('start')
         const Err = 'Operation unsuccessful.';
-        const apiURL = `http://localhost:3000/episodes/`
+        const apiURL = `${APIURL}/episodes/`
         try {
             const res = await fetch(apiURL, {
                 method: "GET",
@@ -160,47 +161,38 @@ export default class Episodes extends React.Component<eProps, State> {
 
     itemData = [
         {
-            img: 'http://localhost:3001/assets/seasonImages/S1.jpeg',
             title: 'Season 1',
             season: 1,
         },
         {
-            img: 'http://localhost:3001/assets/seasonImages/S2.jpeg',
             title: 'Season 2',
             season: 2,
         },
         {
-            img: 'http://localhost:3001/assets/seasonImages/S3.jpeg',
             title: 'Season 3',
             season: 3,
         },
         {
-            img: 'http://localhost:3001/assets/seasonImages/S4.jpeg',
             title: 'Season 4',
             season: 4,
         },
         {
-            img: 'http://localhost:3001/assets/seasonImages/S5.jpeg',
             title: 'Season 5',
             season: 5,
         },
         {
-            img: 'http://localhost:3001/assets/seasonImages/S6.jpeg',
             title: 'Season 6',
             season: 6,
         },
         {
-            img: 'http://localhost:3001/assets/seasonImages/S7.jpeg',
             title: 'Season 7',
             season: 7,
         },
         {
-            img: 'http://localhost:3001/assets/seasonImages/S8.jpeg',
             title: 'Season 8',
             season: 8,
         },
         {
-            img: 'http://localhost:3001/assets/seasonImages/S9.jpeg',
             title: 'Season 9',
             season: 9,
         },
