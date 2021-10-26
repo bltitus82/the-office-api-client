@@ -42,26 +42,6 @@ export const ReverseButton = styled.button`
     font-family: 'Oldenburg', cursive;
 `
 
-export const BasicButton = styled.button`
-    border-radius: 5px;
-    color: indigo;
-    border: 2px solid indigo;
-    background-color: papayawhip;
-    padding: 0.25em 1em;
-    width: 17em;
-    font-size: large;
-    font-family: 'Oldenburg', cursive;
-`
-
-export const BasicReverseButton = styled.button`
-    border-radius: 5px;
-    color: antiquewhite;
-    border: 2px solid antiquewhite;
-    background-color: indigo;
-    padding: 0.25em 1em;
-    font-family: 'Oldenburg', cursive;
-`
-
 export const CreateButton = styled.button`
     border-radius: 5px;
     color: indigo;
@@ -118,7 +98,7 @@ export const AuthHeader = styled.div`
 `
 
 export const SideStyle = styled.div`
-    display: flex;
+    display: inline;
     background-color: #01579B;
     color: antiquewhite;
     width: 100%;
