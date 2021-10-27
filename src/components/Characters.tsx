@@ -3,6 +3,15 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import APIURL from '../helpers/environment';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
 
 type CProps = {
     token: string | null
@@ -28,6 +37,13 @@ type allChars = {
     actorName: string,
     picture: string
 }
+
+const Item = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
 
 export default class Characters extends React.Component<CProps, CState> {
     constructor(props: CProps){
@@ -88,33 +104,40 @@ export default class Characters extends React.Component<CProps, CState> {
     characterMapper = (): JSX.Element[] => {
         return this.state.charList.map((char: allChars) => {
             return(
-                <div>
-                <ImageList sx={{ width: 600, height: 500 }} style={{ margin: 'auto' }}>
-                    <ImageListItem style={{ alignSelf: 'center'}} key={char.picture} >
-                            <img 
-                                src={`${char.picture}?w=248&fit=crop&auto=format`}
-                                srcSet={`${char.picture}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                <Grid item xs={4} sm={4} md={4} key={char.picture} style={{ margin: 'auto' }}>
+                    <Item>
+                        <Card sx={{ maxWidth: 345 }} style={{ margin: 'auto' }}> 
+                            <CardActionArea>
+                                <CardMedia
+                                component="img"
+                                width="550"
+                                image={char.picture}
                                 alt={char.charName}
-                                loading="lazy"
-                            />
-                            <ImageListItemBar
-                                title={char.charName}
-                                subtitle={<span>{char.job}</span>}
-                                position="below"
-                                style={{ fontFamily: 'monospace' }} 
-                            />
-                        </ImageListItem>
-                </ImageList>
-            </div>
+                                />
+                                <CardContent>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    {char.charName}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {char.job} <br />
+                                    Played by {char.actorName}
+                                </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                            </Card>
+                    </Item>
+                </Grid>
             )
         })
     }
 
     render() {
         return(    
-            <div>
-                {this.characterMapper()}
-            </div>
+            <Box>
+                <Grid container spacing={{ xs: 1 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{ padding: 10 }} >
+                    {this.characterMapper()}
+                </Grid>
+            </Box>
         )
     }
 }
