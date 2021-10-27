@@ -1,9 +1,14 @@
 import React from 'react';
 import './App.css'
 import Navbar from './body/Navbar';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Body from './body/Body';
+// import Body from './body/Body';
+import Footer from './body/Footer';
+import Characters from './components/Characters';
+import Episodes from './components/Episodes';
+import Likes from './components/Likes';
+import Quotes from './components/Quotes';
 
 type AppState = {
     token: string | null,
@@ -37,7 +42,14 @@ class App extends React.Component <{}, AppState>{
             <div>
             <Router>
             <Navbar token={this.state.token} admin={this.state.admin} apiErr={this.state.apiErr} />
-            <Body token={this.state.token} apiErr={this.state.apiErr} admin={this.state.admin} userID={this.state.userID} />
+            <Switch>
+                        <Route exact path="/"><Quotes token={this.state.token} admin={this.state.admin} apiErr={this.state.apiErr} userID={this.state.userID} /></Route>
+                        <Route exact path="/characters"><Characters token={this.state.token} admin={this.state.admin} apiErr={this.state.apiErr} userID={this.state.userID} /></Route>
+                        <Route exact path="/episodes"><Episodes token={this.state.token} admin={this.state.admin} apiErr={this.state.apiErr} userID={this.state.userID} /></Route>
+                        <Route exact path="/likes"><Likes token={this.state.token} admin={this.state.admin} apiErr={this.state.apiErr} userID={this.state.userID} /></Route>
+                    </Switch>
+                <Footer />
+            {/* <Body token={this.state.token} apiErr={this.state.apiErr} admin={this.state.admin} userID={this.state.userID} /> */}
             </Router>
             </div>
         );

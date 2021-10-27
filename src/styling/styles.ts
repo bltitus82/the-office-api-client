@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const Container = styled.div`
     display: flex;
     justify-content: space-evenly;
@@ -29,7 +28,11 @@ export const Button = styled.button`
     background-color: antiquewhite;
     margin: 1em 2em;
     padding: 0.25em 1em;
-    font-family: 'Oldenburg', cursive;
+    font-family: 'Source Code Pro', monospace;
+`
+
+export const NavbarColors = styled.div`
+    background-color: #ffc300;
 `
 
 export const ReverseButton = styled.button`
@@ -39,7 +42,7 @@ export const ReverseButton = styled.button`
     background-color: indigo;
     margin: 1em 2em;
     padding: 0.25em 1em;
-    font-family: 'Oldenburg', cursive;
+    font-family: 'Source Code Pro', monospace;
 `
 
 export const CreateButton = styled.button`
@@ -51,7 +54,7 @@ export const CreateButton = styled.button`
     margin-bottom: 2%;
     padding: 0.25em 1em;
     font-size: x-large;
-    font-family: 'Oldenburg', cursive;
+    font-family: 'Source Code Pro', monospace;
 `
 
 export const SmallButton = styled.button`
@@ -82,7 +85,7 @@ export const Label = styled.label`
     color: mintcream;
     font-size: large;
     margin-left: 2%;
-    font-family: 'Oldenburg', cursive;
+    font-family: 'Source Code Pro', monospace;
 `
 
 export const AuthHeader = styled.div`
@@ -94,7 +97,7 @@ export const AuthHeader = styled.div`
     padding-top: 1%;
     padding-bottom: 1%;
     margin-bottom: -1%;
-    font-family: 'Spirax', cursive;
+    font-family: 'Source Code Pro', monospace;
 `
 
 export const SideStyle = styled.div`
@@ -115,7 +118,7 @@ export const HeaderStyle = styled.div`
     justify-content: space-evenly;
     width: 100%;
     padding-top: 2%;
-    font-family: 'Spirax', cursive;
+    font-family: 'Source Code Pro', monospace;
 
 `
 
@@ -126,7 +129,7 @@ export const FooterStyle = styled.div`
     width: 100%;
     min-height: 20vh;
     position: relative;
-    font-family: 'Oldenburg', cursive;
+    font-family: 'Source Code Pro', monospace;
 `
 
 export const TD = styled.td`
@@ -135,7 +138,7 @@ export const TD = styled.td`
 
 export const TH = styled.td`
     color: mintcream;
-    font-family: 'Oldenburg', cursive;
+    font-family: 'Roboto-Mono', monospace;
 `
 
 export const FooterContainer = styled.div`
@@ -171,7 +174,7 @@ font-size: 18px;
 text-decoration: none;
 
 &:hover {
-	color: skyblue;
+	color: #FFC300;
 	transition: 200ms ease-in;
 }
 `
@@ -179,7 +182,7 @@ text-decoration: none;
 export const Heading = styled.p`
 font-size: 24px;
 color: mintcream;
-font-weight: bold;
+font-family: 'Roboto Mono', monospace;
 `
 
 export const FooterP = styled.p`
@@ -189,5 +192,5 @@ font-size: 12px;
 
 export const MyH1 = styled.h1`
 color: mintcream;
-font-family: 'Oldenburg', cursive;
+font-family: 'Roboto-Mono', monospace;
 `

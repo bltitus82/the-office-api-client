@@ -25,6 +25,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import APIURL from '../helpers/environment';
+import {NavbarColors} from '../styling/styles';
 
 type NavbarProps = {
     token: string | null
@@ -131,26 +132,27 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
     return (
         <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-            <Toolbar>
+            <Toolbar >
                 <IconButton
-                    size="large"
+                    size="small"
                     edge="start"
                     color="inherit"
                     aria-label="open drawer"
                     sx={{ mr: 2 }}
+                    font-color="#FAF7E5"
                 >
-                    <Link to="/" ><h4 style={{justifySelf: 'center'}}> Quotes </h4></Link>
-                    <Link to="/characters" ><h4 style={{justifySelf: 'center'}}> Characters </h4></Link>
-                    <Link to="/episodes" ><h4 style={{justifySelf: 'center'}}> Episodes </h4></Link>
+                    <Link to="/" ><h6 style={{justifySelf: 'center'}} color="#FAF7E5"> Quotes </h6></Link>
+                    <Link to="/characters" ><h6 color="#FAF7E5" style={{justifySelf: 'center'}}> Characters </h6></Link>
+                    <Link to="/episodes" ><h6 style={{justifySelf: 'center'}} color="#FAF7E5"> Episodes </h6></Link>
                     {/* <Link to="/likes" ><h4 style={{justifySelf: 'center'}}> Likes </h4></Link> */} 
                 </IconButton>   
 
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} align="center">
                 The Office Hub
             </Typography>
             
             {/* {this.state.token ?  */}
-            <div>
+            {/* <div>
             <Button color="inherit" title="Add a quote"
             onClick={e => {
                 e.preventDefault()
@@ -169,7 +171,8 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
                 this.logoff()
             }}><LogoutIcon /></Button>
             </div>
-            {/* : <div>
+            :*/} 
+            <div> 
                 <Button color="inherit" onClick={e => {
                 e.preventDefault()
                 this.login()
@@ -179,7 +182,7 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
             <Auth logoff={this.logoff} updateToken={this.updateToken} updateAdmin={this.updateAdmin} updateUserID={this.updateUserID} /> 
             : <></> }
             </div>
-        } */}
+        
             </Toolbar>
         </AppBar>
         </Box>
