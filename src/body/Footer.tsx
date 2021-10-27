@@ -8,7 +8,6 @@ import {
     Heading,
     FooterP
 } from '../styling/styles';
-import Link from '@mui/material/Link';
 import { BrowserRouter as Router } from 'react-router-dom'
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
