@@ -85,12 +85,12 @@ export default class Characters extends React.Component<CProps, CState> {
         }
     }
 
-    render() {
-        return(    
-            <div>
-                <ImageList sx={{ width: 500, height: 450 }}>
-                    {this.state.charList.map((char: allChars) => (
-                        <ImageListItem key={char.picture} >
+    characterMapper = (): JSX.Element[] => {
+        return this.state.charList.map((char: allChars) => {
+            return(
+                <div>
+                <ImageList sx={{ width: 600, height: 500 }} style={{ margin: 'auto' }}>
+                    <ImageListItem style={{ alignSelf: 'center'}} key={char.picture} >
                             <img 
                                 src={`${char.picture}?w=248&fit=crop&auto=format`}
                                 srcSet={`${char.picture}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -101,10 +101,19 @@ export default class Characters extends React.Component<CProps, CState> {
                                 title={char.charName}
                                 subtitle={<span>{char.job}</span>}
                                 position="below"
+                                style={{ fontFamily: 'monospace' }} 
                             />
                         </ImageListItem>
-                    ))}
                 </ImageList>
+            </div>
+            )
+        })
+    }
+
+    render() {
+        return(    
+            <div>
+                {this.characterMapper()}
             </div>
         )
     }

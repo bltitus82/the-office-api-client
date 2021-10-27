@@ -181,7 +181,7 @@ export default class Quotes extends React.Component<QProps, QState> {
         return(
             <div>
                 {this.props.token ? 
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card sx={{ maxWidth: 345 }} style={{ margin: 'auto' }}>
                         <CardMedia
                             component="img"
                             height="500"
@@ -207,7 +207,7 @@ export default class Quotes extends React.Component<QProps, QState> {
                         <Button variant="outlined" onClick={this.getQuote}>Next Quote</Button>
                     </Card>
                     :
-                    <Card sx={{ maxWidth: 345 }}>
+                    <Card sx={{ maxWidth: 345 }} style={{ margin: 'auto' }}>
                         <CardMedia
                             component="img"
                             height="500"

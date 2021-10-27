@@ -5,7 +5,7 @@ export const Container = styled.div`
     justify-content: space-evenly;
     align-items: top;
     color: papayawhip;
-    background-color: #01579B;
+    background-color: #FFE948;
     height: 86vh;
 `
 
@@ -14,7 +14,7 @@ export const Form = styled.form`
     justify-content: space-evenly;
     align-items: center;
     text-align: center;
-    color: papayawhip;
+    color: #FE9B25;
     background-color: #01579B;
     width: 75%;
     height: 75vh;
@@ -32,7 +32,7 @@ export const Button = styled.button`
 `
 
 export const NavbarColors = styled.div`
-    background-color: #ffc300;
+    background-color: #FFE948;
 `
 
 export const ReverseButton = styled.button`
@@ -77,12 +77,12 @@ export const Input = styled.input`
 `
 
 export const FormInput = styled.input`
-    background-color: mintcream;
+    background-color: #272625;
     width: 19em;
 `
 
 export const Label = styled.label`
-    color: mintcream;
+    color: #272625;
     font-size: large;
     margin-left: 2%;
     font-family: 'Source Code Pro', monospace;
@@ -91,7 +91,7 @@ export const Label = styled.label`
 export const AuthHeader = styled.div`
     display: block;
     justify-content: space-evenly;
-    color: papayawhip;
+    color: #FE9B25;
     text-align: center;
     background-color: indigo;
     padding-top: 1%;
@@ -100,44 +100,22 @@ export const AuthHeader = styled.div`
     font-family: 'Source Code Pro', monospace;
 `
 
-export const SideStyle = styled.div`
-    display: inline;
-    background-color: #01579B;
-    color: antiquewhite;
-    width: 100%;
-    min-height: 75vh;
-    padding-top: 3%;
-    padding-left: 1%;
-    position: relative;
-`
-
-export const HeaderStyle = styled.div`
-    display: flex;
-    background-color: indigo;
-    color: antiquewhite;
-    justify-content: space-evenly;
-    width: 100%;
-    padding-top: 2%;
-    font-family: 'Source Code Pro', monospace;
-
-`
-
 export const FooterStyle = styled.div`
     background-color: #424242;
-    color: papayawhip;
+    color: #FE9B25;
     justify-content: space-evenly;
     width: 100%;
     min-height: 20vh;
-    position: relative;
+    position: bottom;
     font-family: 'Source Code Pro', monospace;
 `
 
 export const TD = styled.td`
-    color: mintcream;
+    color: #272625;
 `
 
 export const TH = styled.td`
-    color: mintcream;
+    color: #272625;
     font-family: 'Roboto-Mono', monospace;
 `
 
@@ -151,9 +129,10 @@ export const FooterContainer = styled.div`
 
 export const Row = styled.div`
 display: grid;
+justify-content: space-evenly;
 grid-template-columns: repeat(auto-fill,
 						minmax(200px, 1fr));
-grid-gap: 20px;
+gap: 20px;
 
 @media (max-width: 1000px) {
 	grid-template-columns: repeat(auto-fill,
@@ -166,11 +145,13 @@ display: flex;
 flex-direction: column;
 margin-left: 20px;
 margin-right: -20px;
+padding-left: 20px;
+padding-right: -20px;
 `
 
 export const FooterLink = styled.a`
-color: mintcream;
-font-size: 18px;
+color: #FE9B25;
+font-size: 12px;
 text-decoration: none;
 
 &:hover {
@@ -181,16 +162,16 @@ text-decoration: none;
 
 export const Heading = styled.p`
 font-size: 24px;
-color: mintcream;
+color: #FE9B25;
 font-family: 'Roboto Mono', monospace;
 `
 
 export const FooterP = styled.p`
-color: mintcream;
+color: #FE9B25;
 font-size: 12px;
 `
 
 export const MyH1 = styled.h1`
-color: mintcream;
+color: #272625;
 font-family: 'Roboto-Mono', monospace;
 `

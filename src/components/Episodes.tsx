@@ -103,14 +103,14 @@ export default class Episodes extends React.Component<eProps, State> {
         return this.itemData.map((item) => {
             return(
                 <div>
-                    <Accordion> 
+                    <Accordion style={{ margin: 'auto', paddingLeft: 50, paddingRight: 50 }}> 
                         <AccordionSummary 
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                             key={item.season}
                         >
-                            <Typography>{item.title}</Typography>
+                            <Typography style={{ fontFamily: 'monospace' }}>{item.title}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>                        
                             <Typography>
@@ -118,23 +118,23 @@ export default class Episodes extends React.Component<eProps, State> {
                                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                                     <TableHead>
                                         <TableRow>
-                                            <StyledTableCell>Title</StyledTableCell>
-                                            <StyledTableCell align="right">Air Date</StyledTableCell>
-                                            <StyledTableCell align="right">Season</StyledTableCell>
-                                            <StyledTableCell align="right">Episode</StyledTableCell>
-                                            <StyledTableCell align="right">Synopsis</StyledTableCell>
+                                            <StyledTableCell style={{ fontFamily: 'monospace' }}>Title</StyledTableCell>
+                                            <StyledTableCell style={{ fontFamily: 'monospace' }} align="center">Air Date</StyledTableCell>
+                                            <StyledTableCell style={{ fontFamily: 'monospace' }} align="center">Season</StyledTableCell>
+                                            <StyledTableCell style={{ fontFamily: 'monospace' }} align="center">Episode</StyledTableCell>
+                                            <StyledTableCell style={{ fontFamily: 'monospace' }} align="center">Synopsis</StyledTableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                     {this.state.episodeData.filter(episode => episode.season === item.season ).map((eps) => (
                                             <StyledTableRow key={eps.id}>
-                                                <StyledTableCell component="th" scope="row">
+                                                <StyledTableCell style={{ fontFamily: 'monospace' }} component="th" scope="row">
                                                     {eps.title}
                                                 </StyledTableCell>
-                                                <StyledTableCell align="right">{eps.airDate}</StyledTableCell>
-                                                <StyledTableCell align="right">{eps.season}</StyledTableCell>
-                                            <StyledTableCell align="right">{eps.epNumber}</StyledTableCell>
-                                            <StyledTableCell align="right">{eps.synopsis}</StyledTableCell>
+                                                <StyledTableCell style={{ fontFamily: 'monospace' }} align="center">{eps.airDate}</StyledTableCell>
+                                                <StyledTableCell style={{ fontFamily: 'monospace' }} align="center">{eps.season}</StyledTableCell>
+                                            <StyledTableCell style={{ fontFamily: 'monospace' }} align="center">{eps.epNumber}</StyledTableCell>
+                                            <StyledTableCell style={{ fontFamily: 'monospace' }} align="left">{eps.synopsis}</StyledTableCell>
                                             </StyledTableRow>
                                         ))}
                                     </TableBody>
@@ -150,8 +150,8 @@ export default class Episodes extends React.Component<eProps, State> {
 
     render() {
         return(
-            <div>
-            <h1>The Office Seasons</h1>
+            <div style={{ textAlign: 'center', fontFamily: 'monospace' }}>
+            <h3>Seasons</h3>
             <div>
                 {this.seasonMapper()}
             </div>

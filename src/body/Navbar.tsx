@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
@@ -12,20 +13,57 @@ import Admin from '../auth/Admin';
 import { SmallButton } from '../styling/styles';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
-import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
 import AddIcon from '@mui/icons-material/Add';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import APIURL from '../helpers/environment';
 import {NavbarColors} from '../styling/styles';
+import { createTheme } from '@mui/material/styles';
+import Nav from 'react-bootstrap/Nav';
+
+const theme = createTheme({
+    status: {
+        danger: '#e53e3e',
+    },
+    palette: {
+        primary: {
+            main: '#424242',
+            darker: '#424242',
+        },
+        neutral: {
+            main: '#FE9B25',
+            contrastText: '#FFC300',
+        },
+    },
+});
+
+declare module '@mui/material/styles' {
+    interface Theme {
+        status: {
+            danger: React.CSSProperties['color'];
+        };
+    }
+
+    interface Palette {
+        neutral: Palette['primary'];
+    }
+    interface PaletteOptions {
+        neutral: PaletteOptions['primary'];
+    }
+
+    interface PaletteColor {
+        darker?: string;
+    }
+    interface SimplePaletteColorOptions {
+        darker?: string;
+    }
+    interface ThemeOptions {
+        status: {
+            danger: React.CSSProperties['color'];
+        };
+    }
+}
 
 type NavbarProps = {
     token: string | null
@@ -39,46 +77,6 @@ type NavbarState = {
     token: string | null
     admin: string | null
 }
-
-const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: alpha(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: alpha(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
-        },
-    }));
-
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
-
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
-        '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
-        },
-    }));
 
 export default class Navbar extends React.Component<NavbarProps, NavbarState> {
     constructor(props: NavbarProps) {
@@ -130,62 +128,85 @@ export default class Navbar extends React.Component<NavbarProps, NavbarState> {
 
     render(){
     return (
-        <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-            <Toolbar >
-                <IconButton
-                    size="small"
-                    edge="start"
-                    color="inherit"
-                    aria-label="open drawer"
-                    sx={{ mr: 2 }}
-                    font-color="#FAF7E5"
-                >
-                    <Link to="/" ><h6 style={{justifySelf: 'center'}} color="#FAF7E5"> Quotes </h6></Link>
-                    <Link to="/characters" ><h6 color="#FAF7E5" style={{justifySelf: 'center'}}> Characters </h6></Link>
-                    <Link to="/episodes" ><h6 style={{justifySelf: 'center'}} color="#FAF7E5"> Episodes </h6></Link>
-                    {/* <Link to="/likes" ><h4 style={{justifySelf: 'center'}}> Likes </h4></Link> */} 
-                </IconButton>   
-
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} align="center">
-                The Office Hub
-            </Typography>
-            
-            {/* {this.state.token ?  */}
-            {/* <div>
-            <Button color="inherit" title="Add a quote"
-            onClick={e => {
-                e.preventDefault()
-                this.createQuote()
-            }}><AddIcon /></Button>
-            
-            <Button color="inherit" title="My Account"
-            onClick={e => {
-                e.preventDefault()
-                this.viewProfile()
-            }}><AccountCircleIcon /></Button>
-            
-            <Button color="inherit" title="Logout"
-            onClick={e => {
-                e.preventDefault()
-                this.logoff()
-            }}><LogoutIcon /></Button>
+        <div>
+            <Nav activeKey='/' style={{ backgroundColor: 'dimgrey'}}>
+                <Nav.Item>
+                    <Nav.Link href="/" style={{ fontFamily: 'monospace', color: 'orange' }}>Quotes</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/characters" style={{ fontFamily: 'monospace', color: 'orange' }}>Characters</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link href="/episodes" style={{ fontFamily: 'monospace', color: 'orange' }}>Episodes</Nav.Link>
+                </Nav.Item>
+                <Nav.Item style={{ margin: "auto" }}>
+                    <h2 style={{ fontFamily: "monospace", color: 'whitesmoke', fontWeight: 'bolder'}}>The Office Quotes</h2>
+                </Nav.Item>
+                <Nav.Item style={{}}>
+                <div> 
+                    <Button color="inherit" onClick={e => {
+                    e.preventDefault()
+                    this.login()
+                    }} title="Login or Signup"
+                    ><LoginIcon /></Button> 
+                    {this.state.loggedIn ? 
+                    <Auth logoff={this.logoff} updateToken={this.updateToken} updateAdmin={this.updateAdmin} updateUserID={this.updateUserID} /> 
+                    : <></> }
+                    </div>
+                </Nav.Item>
+            </Nav>
             </div>
-            :*/} 
-            <div> 
-                <Button color="inherit" onClick={e => {
-                e.preventDefault()
-                this.login()
-            }} title="Login or Signup"
-            ><LoginIcon /></Button> 
-            {this.state.loggedIn ? 
-            <Auth logoff={this.logoff} updateToken={this.updateToken} updateAdmin={this.updateAdmin} updateUserID={this.updateUserID} /> 
-            : <></> }
-            </div>
+        // <Box sx={{ flexGrow: 1 }}>
+        // <NavbarColors>
+        //     <AppBar position="static">
+        //     <Toolbar>
+        //         <Stack direction="row" spacing={2}>
+        //             <Button color="info" href="/">Quotes</Button>
+        //             <Button color="secondary" href="/characters">Characters</Button>
+        //             <Button color="secondary" href="/episodes">Episodes</Button>
+        //             {/* <Button href="/likes">Likes</Button> */}
+        //         </Stack>
+      
+        //     <Typography variant="h2" component="div" sx={{ flexGrow: 1 }} align="center" fontFamily="monospace">
+        //         The Office Quotes
+        //     </Typography>
+            
+        //     {/* {this.state.token ?  */}
+        //     {/* <div>
+        //     <Button color="inherit" title="Add a quote"
+        //     onClick={e => {
+        //         e.preventDefault()
+        //         this.createQuote()
+        //     }}><AddIcon /></Button>
+            
+        //     <Button color="inherit" title="My Account"
+        //     onClick={e => {
+        //         e.preventDefault()
+        //         this.viewProfile()
+        //     }}><AccountCircleIcon /></Button>
+            
+        //     <Button color="inherit" title="Logout"
+        //     onClick={e => {
+        //         e.preventDefault()
+        //         this.logoff()
+        //     }}><LogoutIcon /></Button>
+        //     </div>
+        //     :*/} 
+        //     <div> 
+        //         <Button color="inherit" onClick={e => {
+        //         e.preventDefault()
+        //         this.login()
+        //     }} title="Login or Signup"
+        //     ><LoginIcon /></Button> 
+        //     {this.state.loggedIn ? 
+        //     <Auth logoff={this.logoff} updateToken={this.updateToken} updateAdmin={this.updateAdmin} updateUserID={this.updateUserID} /> 
+        //     : <></> }
+        //     </div>
         
-            </Toolbar>
-        </AppBar>
-        </Box>
+        //     </Toolbar>
+        // </AppBar>
+        // </NavbarColors>
+        // </Box>
             
     );
     }
